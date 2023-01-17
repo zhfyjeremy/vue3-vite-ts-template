@@ -1,0 +1,3 @@
+interface appState {
+    lang: string
+}

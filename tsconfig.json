@@ -1,0 +1,35 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "useDefineForClassFields": true,
+        "module": "ESNext",
+        "moduleResolution": "Node",
+        "strict": true,
+        "jsx": "preserve", // tsx需要
+        "jsxFactory": "h", // tsx需要
+        "jsxFragmentFactory": "Fragment", // tsx需要
+        "sourceMap": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "esModuleInterop": true,
+        "lib": ["ESNext", "DOM"],
+        "skipLibCheck": true,
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["src/*"],
+            "#/*": ["types/*"]
+        },
+        "types": ["vite-plugin-svg-icons/client", "element-plus/global"],
+        "typeRoots": ["./node_modules/@types/", "./types"]
+    },
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.d.ts",
+        "src/**/*.tsx",
+        "src/**/*.vue",
+        "types/*.d.ts",
+        "types/**/*.d.ts",
+        "types/*.ts"
+    ],
+    "exclude": ["node_modules", "dist"]
+}
