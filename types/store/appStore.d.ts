@@ -1,3 +1,0 @@
-interface appState {
-    lang: string
-}
