@@ -12,3 +12,24 @@
 -   提供丰富的组件
 -   主题：可配置的主题
 -   tailwindcss 与 element-plus 样式控制
+
+## 安装使用
+
+`建议使用pnpm`
+
+```bash
+# 克隆项目
+git clone https://gitee.com/zhfyjeremy/vue3-vite-ts-template.git
+
+# 进入项目
+cd vue3-vite-ts-template
+
+# 安装依赖
+pnpm install
+
+# 运行项目
+pnpm dev
+
+# 打包发布
+pnpm build
+```
