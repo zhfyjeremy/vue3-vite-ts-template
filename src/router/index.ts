@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import routerGuard from './guard'
 import { constantRoutes } from './constantRoute'
 import { App } from 'vue'
@@ -10,7 +10,7 @@ declare module 'vue-router' {
 }
 const router = createRouter({
     linkActiveClass: 'router-active',
-    history: createWebHistory(),
+    history: createWebHashHistory(),
     routes: constantRoutes
 })
 // 路由守卫

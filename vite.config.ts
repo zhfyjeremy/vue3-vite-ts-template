@@ -10,11 +10,11 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
     const isBuild = command === 'build'
     const env = parseEnv(loadEnv(mode, process.cwd()))
     return {
-        base: '/',
+        base: mode === 'production' ? '/vue3-vite-ts-template' : '',
         resolve: {
-            alias,
+            alias
         },
         plugins: [...setupPlugins(isBuild, env)],
-        css,
+        css
     }
 })

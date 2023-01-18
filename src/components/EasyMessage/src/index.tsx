@@ -25,7 +25,7 @@ export default defineComponent({
             if (msg.length > messageMaxLength) return msg.substring(0, messageMaxLength)
             return msg
         })
-        let timer: NodeJS.Timeout
+        let timer: any
         const closeMessage = () => {
             clearTimeout(timer)
             isShow.value = false
