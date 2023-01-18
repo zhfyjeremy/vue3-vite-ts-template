@@ -1,5 +1,7 @@
 <template>
-    <el-button type="primary" @click="handleLogin">登录</el-button>
+    <div class="flex-center p-40">
+        <el-button class="w-24" type="primary" @click="handleLogin">登 录</el-button>
+    </div>
 </template>
 <script lang="ts" setup>
 import { useUserStore } from '@/store'

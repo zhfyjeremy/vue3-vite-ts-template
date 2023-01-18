@@ -1,5 +1,5 @@
 <template>
-    <header class="h-14 bg-gray-300 flex items-center justify-center">
+    <header class="h-16 bg-gray-300 flex-center">
         <router-link class="mr-4" to="/">Home</router-link>
         <router-link class="mr-4" to="/about">About</router-link>
         <router-link to="/table">Table</router-link>
@@ -8,7 +8,20 @@
             <span v-else class="text-sm text-gray-500 cursor-pointer hover:text-red-500" @click="router.push('/login')"
                 >还未登录?立即登录</span
             >
-            <span @click="handleLogout" class="ml-4 text-gray-500 text-sm cursor-pointer" v-if="userName">Logout</span>
+            <span
+                @click="handleLogout"
+                class="ml-4 text-gray-500 text-sm cursor-pointer hover:text-primary-default"
+                v-if="userName">
+                Logout
+            </span>
+        </div>
+        <div class="ml-10">
+            <a href="https://gitee.com/zhfyjeremy/vue3-vite-ts-template" target="_blank">
+                <el-button type="danger">Gitee</el-button>
+            </a>
+            <a class="ml-3" href="https://github.com/zhfyjeremy/vue3-vite-ts-template" target="_blank">
+                <el-button type="primary">Github</el-button>
+            </a>
         </div>
     </header>
 </template>

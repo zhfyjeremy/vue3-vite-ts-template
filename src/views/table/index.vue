@@ -3,13 +3,17 @@
         <el-card class="mb-5">
             <template #header>
                 <div class="card-header">
-                    <span>前言</span>
+                    vue3 ts element plus
+                    table表格二次封装详细步骤。支持单元格内容、表头自定义渲染（支持使用作用域插槽、tsx 语法、h 函数）
                 </div>
             </template>
             <div class="mb-5">
-                <el-link type="primary" href="https://blog.csdn.net/weixin_45291937/article/details/125523244"
-                    >可参考CSDN中的参数介绍</el-link
-                >
+                <el-link
+                    type="primary"
+                    href="https://blog.csdn.net/weixin_45291937/article/details/125523244"
+                    target="_blank">
+                    可参考CSDN中的参数介绍
+                </el-link>
             </div>
             <p class="text-sm text-gray-500">可参考 @/components/table/doc.md 中的参数介绍</p>
         </el-card>
@@ -25,7 +29,7 @@
                     <span>演示slot使用--->{{ row.address }}</span>
                 </template>
             </easy-table>
-            <el-button @click="handleSelection([tableData[1], tableData[2]])">选中第二、三行</el-button>
+            <el-button class="mt-5" @click="handleSelection([tableData[1], tableData[2]])">选中第二、三行</el-button>
         </el-card>
         <!-- Render函数自定义列 -->
         <el-card class="box-card mb-5">
