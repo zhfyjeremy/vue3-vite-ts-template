@@ -1,4 +1,4 @@
-# Vue 3 + TypeScript + Vite test
+# Vue3 + TypeScript + Vite
 
 ## 介绍
 
@@ -13,6 +13,12 @@
 -   主题：可配置的主题
 -   tailwindcss 与 element-plus 样式控制
 
+## 预览
+
+<!-- - [点我查看国内预览站](https://yiming_chang.gitee.io/vue-pure-admin) -->
+
+-   [点我查看国外预览站](https://zhfyjeremy.github.io/vue3-vite-ts-template)
+
 ## 安装使用
 
 `建议使用pnpm`
@@ -20,7 +26,7 @@
 ```bash
 # 克隆项目
 git clone https://gitee.com/zhfyjeremy/vue3-vite-ts-template.git
-
+git clone https://github.com/zhfyjeremy/vue3-vite-ts-template.git
 # 进入项目
 cd vue3-vite-ts-template
 
@@ -29,6 +35,9 @@ pnpm install
 
 # 运行项目
 pnpm dev
+
+# 本地访问
+http://localhost:5173/
 
 # 打包发布
 pnpm build
