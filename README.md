@@ -15,7 +15,7 @@
 
 ## 预览
 
-<!-- - [点我查看国内预览站](https://yiming_chang.gitee.io/vue-pure-admin) -->
+-   [点我查看国内预览站](https://zhfyjeremy.gitee.io/vue3-vite-ts-template)
 
 -   [点我查看国外预览站](https://zhfyjeremy.github.io/vue3-vite-ts-template)
 
