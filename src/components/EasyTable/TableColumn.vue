@@ -16,14 +16,7 @@ const handleAction = (command: Table.Command, scope: any) => {
         </el-table-column>
     </template>
     <!-- 其他正常列 -->
-    <el-table-column
-        v-else
-        :show-overflow-tooltip="col.showOverflowTooltip"
-        :sortable="col.sortable"
-        :prop="col.prop"
-        :align="col.align"
-        :label="col.label"
-        :width="col.width">
+    <el-table-column v-else v-bind="col">
         <template #default="{ row, $index }">
             <!---图片 (START)-->
             <!-- 如需更改图片size，可自行配置参数 -->

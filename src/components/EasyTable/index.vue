@@ -31,12 +31,18 @@
                     <!---复选框, 序号 (START)-->
                     <el-table-column
                         v-if="col.type === 'index' || col.type === 'selection' || col.type === 'expand'"
-                        :align="col.align"
-                        :label="col.label"
-                        :type="col.type"
                         :index="indexMethod"
-                        :selectable="col.selectable"
-                        :width="col.width" />
+                        v-bind="col">
+                        <!-- 当type等于expand时， 配置通过h函数渲染、txs语法或者插槽自定义内容 -->
+                        <template #default="{ row, $index }">
+                            <!-- render函数 (START) : 使用内置的component组件可以支持h函数渲染和txs语法 -->
+                            <component v-if="col.render" :is="col.render" :row="row" :index="$index" />
+                            <!-- render函数 (END) -->
+                            <!-- 自定义slot (START) -->
+                            <slot v-else-if="col.slot" name="expand" :row="row" :index="$index"></slot>
+                            <!-- 自定义slot (END) -->
+                        </template>
+                    </el-table-column>
                     <!---复选框, 序号 (END)-->
                     <TableColumnVue :col="col" v-else @command="handleAction">
                         <!-- 自定义表头插槽 -->

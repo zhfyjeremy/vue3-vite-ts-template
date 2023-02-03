@@ -15,7 +15,7 @@
                     可参考CSDN中的参数介绍
                 </el-link>
             </div>
-            <p class="text-sm text-gray-500">可参考 @/components/table/doc.md 中的参数介绍</p>
+            <p class="text-sm text-gray-500">也可以参考 @/components/table/doc.md 中的参数介绍</p>
         </el-card>
         <!-- 基本表格 -->
         <el-card class="mb-5">
@@ -51,6 +51,11 @@
                     <span>{{ column.label }}(插槽自定义表头)</span>
                 </template>
             </easy-table>
+        </el-card>
+        <!-- 展开行 -->
+        <el-card class="mb-5">
+            <template #header>展开行</template>
+            <EasyTable :columns="tableColumns4" :table-data="tableData" />
         </el-card>
         <!-- 多级表头 -->
         <el-card>
@@ -107,6 +112,7 @@ const tableColumn: Table.Column[] = [
         ]
     }
 ]
+// render 函数渲染自定义列
 const tableColumn3: Table.Column[] = [
     { type: 'selection', width: '50' },
     { type: 'index', width: '50', label: 'No.' },
@@ -153,6 +159,30 @@ const tableColumn3: Table.Column[] = [
                     { default: () => '删除' }
                 )
             ])
+    }
+]
+// 展开行
+const renderExpandContent = (row: IUser) =>
+    h('div', { class: 'p-5' }, [
+        h('p', `名字：${row.name}`),
+        h('p', `地址：${row.address}`),
+        h('p', `日期：${row.date}`)
+    ])
+const tableColumns4: Table.Column[] = [
+    // 使用render函数渲染展开行的内容
+    { type: 'expand', width: '50', render: ({ row }) => renderExpandContent(row) },
+    // { type: 'expand', width: '50', slot: 'expand' },
+    { type: 'index', width: '50', label: 'No.' },
+    { prop: 'name', label: '名字', sortable: true },
+    { prop: 'date', label: '日期', type: 'date' },
+    { prop: 'address', label: '地址', showOverflowTooltip: true },
+    {
+        width: '180',
+        label: '操作',
+        buttons: [
+            { name: '编辑', type: 'success', command: 'edit' },
+            { name: '删除', type: 'danger', command: 'delete' }
+        ]
     }
 ]
 // 多级表头配置
