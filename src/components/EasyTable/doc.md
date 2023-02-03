@@ -69,6 +69,12 @@ TableColunm 这个组件本打算用 tsx 语法写，因为 tsx 更适合封装�
 | size    | 用于控制该按钮组内按钮的大小      | large / default / small                     | 是       | —      |
 | type    | 用于控制该按钮组内按钮的类型      | primary / success / warning / danger / info | 否       | —      |
 
+#### Table 插槽
+
+| 插槽名 | 说明                                               | 插槽作用域     |
+| :----- | :------------------------------------------------- | :------------- |
+| expand | 当列的 type 等于 expand 时，自定义展开行区域的内容 | { row, index } |
+
 #### Table 事件
 
 | 事件名            | 说明                                       | 回调参数                 |
