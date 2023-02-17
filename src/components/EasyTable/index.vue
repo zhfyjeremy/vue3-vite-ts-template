@@ -114,19 +114,18 @@ const _paginationConfig = computed(() => {
     }
     return Object.assign(config, _options.value.paginationConfig)
 })
-interface EmitEvent {
-    (e: 'selection-change', params: any): void // 当选择项发生变化时会触发该事件
-    (e: 'row-click', row: any, column: TableColumnCtx<any>, event: MouseEvent): void // 当某一行被点击时会触发该事件
-    (e: 'cell-click', row: any, column: TableColumnCtx<any>, cell: any, event: MouseEvent): void // 当某个单元格被点击时会触发该事件
-    (e: 'command', command: Table.Command, row: any): void // 按钮组事件
-    (e: 'size-change', pageSize: number): void // pageSize事件
-    (e: 'current-change', currentPage: number): void // currentPage按钮组事件
-    (e: 'pagination-change', currentPage: number, pageSize: number): void // currentPage或者pageSize改变触发
-    (e: 'search', params: Record<string, any>): void // 搜索
-    (e: 'sort-change', params: SortParams<any>): void // 列排序发生改变触发
-    (e: 'refresh'): void // 工具栏刷新按钮重新刷新
-}
-const emit = defineEmits<EmitEvent>()
+const emit = defineEmits([
+    'selection-change', // 当选择项发生变化时会触发该事件
+    'row-click', // 当某一行被点击时会触发该事件
+    'cell-click', // 当某个单元格被点击时会触发该事件
+    'command', // 按钮组事件
+    'size-change', // pageSize事件
+    'current-change', // currentPage按钮组事件
+    'pagination-change', // currentPage或者pageSize改变触发
+    'search', // 搜索
+    'sort-change', // 列排序发生改变触发
+    'refresh' // 工具栏刷新按钮重新刷新
+])
 const { isSupported, isFullscreen, toggle } = useFullscreen(tableWrap)
 
 // 切换表格全屏
@@ -156,11 +155,11 @@ const currentPageChange = (currentPage: number) => {
     emit('pagination-change', currentPage, _paginationConfig.value.pageSize)
 }
 // 按钮组事件
-const handleAction = (command: Table.Command, row: any) => {
-    emit('command', command, row)
+const handleAction = (command: Table.Command, row: any, index: number) => {
+    emit('command', command, row, index)
 }
 // 多选事件
-const handleSelectionChange = (val: any) => {
+const handleSelectionChange = (val: any[]) => {
     emit('selection-change', val)
 }
 // 当某一行被点击时会触发该事件

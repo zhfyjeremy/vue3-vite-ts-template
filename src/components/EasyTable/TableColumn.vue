@@ -3,8 +3,8 @@ import dayjs from 'dayjs'
 defineProps<{ col: Table.Column }>()
 const emit = defineEmits(['command'])
 // 按钮组事件
-const handleAction = (command: Table.Command, scope: any) => {
-    emit('command', command, scope.row)
+const handleAction = (command: Table.Command, { row, $index }: { row: any; $index: number }) => {
+    emit('command', command, row, $index)
 }
 </script>
 <template>

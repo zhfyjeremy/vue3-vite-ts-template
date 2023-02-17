@@ -24,7 +24,7 @@
                     <span>基本表格</span>
                 </div>
             </template>
-            <easy-table ref="easyTableRef" :columns="tableColumn" :table-data="tableData">
+            <easy-table ref="easyTableRef" :columns="tableColumn" :table-data="tableData" @command="handleCommand">
                 <template #address="{ row }">
                     <span>演示slot使用--->{{ row.address }}</span>
                 </template>
@@ -38,11 +38,7 @@
                     <span>Render函数自定义列、自定义表头</span>
                 </div>
             </template>
-            <easy-table
-                :columns="tableColumn3"
-                :table-data="tableData"
-                @selection-change="handleSelection2"
-                @command="handleAction">
+            <easy-table :columns="tableColumn3" :table-data="tableData" @selection-change="handleSelection2">
                 <template #date="{ row }">
                     <span> {{ row.date }}</span>
                 </template>
@@ -276,7 +272,18 @@ const handleSelection = (rows?: IUser[]) => {
         console.log(11)
     }
 }
-
+const handleCommand = (command: Table.Command, row: any, index: number) => {
+    switch (command) {
+        case 'edit':
+            EasyMessage.success(`编辑--${row.name} ----- ${index}`)
+            break
+        case 'delete':
+            EasyMessage.error(`删除--${row.name} ----- ${index}`)
+            break
+        default:
+            break
+    }
+}
 const handleSelection2 = (val: IUser[]) => {
     console.log('父组件接收的多选数据', val)
 }
@@ -285,20 +292,6 @@ const handleRenderEdit = (row: IUser, index: number) => {
 }
 const handleRenderDelete = (row: IUser, index: number) => {
     EasyMessage.error(`${row.name} ----- ${index}`)
-}
-const handleAction = (command: Table.Command, row: IUser) => {
-    switch (command) {
-        case 'edit':
-            EasyMessage.success(`编辑 ${row.name}`)
-            break
-        case 'delete':
-            ElMessageBox.confirm('确认删除吗？', '提示').then(() => {
-                EasyMessage.info(row.name)
-            })
-            break
-        default:
-            break
-    }
 }
 </script>
 <style lang="scss" scoped></style>
