@@ -1,5 +1,4 @@
 import { useUserStore } from '@/store'
-import { AxiosCanceler } from '@/service/helper/axiosCancel'
 import { Router } from 'vue-router'
 import NProgress from '@/config/nprogress'
 import whiteList from '@/config/whiteList'
@@ -16,9 +15,6 @@ export default class RouterPermission {
         router.beforeEach(async (to, from, next) => {
             NProgress.start()
             const userStore = useUserStore()
-            const axiosCanceler = new AxiosCanceler()
-            // 在跳转路由之前，清除所有的请求
-            axiosCanceler.removeAllPending()
             const { token } = userStore
             // 判断用户是否登录
             if (!token) {

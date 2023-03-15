@@ -52,7 +52,7 @@ class RequestHttp {
                 this.isCallbackAll = config.isCallbackAll ?? IS_CALLBACK_ALL
                 this.showLoading && showFullScreenLoading()
                 const token = getToken()
-                //注意： 如果项目中不是使用JWT验证token方式， 需自行更改一下headers配置
+                // 注意： 如果项目中不是使用JWT验证token方式， 需自行更改一下headers配置
                 return { ...config, headers: { Authorization: `Bearer ${token}` || '' } }
             },
             (error: AxiosError) => Promise.reject(error)
