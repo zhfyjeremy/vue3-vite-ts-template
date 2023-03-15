@@ -2,7 +2,8 @@
     <header class="h-16 bg-gray-300 flex-center">
         <router-link class="mr-4" to="/">Home</router-link>
         <router-link class="mr-4" to="/about">About</router-link>
-        <router-link to="/table">Table</router-link>
+        <router-link class="mr-4" to="/table">Table</router-link>
+        <router-link to="/form">Form</router-link>
         <div class="ml-10">
             <span v-if="userName">{{ userName }}</span>
             <span v-else class="text-sm text-gray-500 cursor-pointer hover:text-red-500" @click="router.push('/login')"
