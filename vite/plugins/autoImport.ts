@@ -1,5 +1,5 @@
-import { Plugin } from 'vite'
 import AutoImport from 'unplugin-auto-import/vite'
+import { PluginOption } from 'vite'
 import Components from 'unplugin-vue-components/vite'
 import ElementPlus from 'unplugin-element-plus/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
@@ -7,7 +7,7 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import Icons from 'unplugin-icons/vite'
 import IconsResolver from 'unplugin-icons/resolver'
 // 自动导入插件
-export default (plugins: Plugin[]) => {
+export default (plugins: PluginOption[]) => {
     plugins.push(
         AutoImport({
             imports: [
