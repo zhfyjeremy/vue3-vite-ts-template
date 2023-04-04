@@ -43,7 +43,7 @@
                     <span> {{ row.date }}</span>
                 </template>
                 <!-- 插槽自定义表头 -->
-                <template #addressHeader="{ column }: any">
+                <template #addressHeader="{ column }">
                     <span>{{ column.label }}(插槽自定义表头)</span>
                 </template>
             </easy-table>
@@ -56,7 +56,15 @@
         <!-- 多级表头 -->
         <el-card>
             <template #header>多级表头</template>
-            <EasyTable :columns="tableColumns2" :table-data="tableData2" />
+            <EasyTable :columns="tableColumns2" :table-data="tableData2">
+                <!-- 插槽自定义表头 -->
+                <template #deliveryHeader="{ column }: any">
+                    <p class="bg-red-400 text-white">{{ column.label }}(插槽自定义表头)</p>
+                </template>
+                <template #stateHeader="{ column }">
+                    <p class="bg-green-400 text-white">{{ column.label }}(插槽自定义表头)</p>
+                </template>
+            </EasyTable>
         </el-card>
     </div>
 </template>
@@ -183,17 +191,30 @@ const tableColumns4: Table.Column[] = [
 ]
 // 多级表头配置
 const tableColumns2: Table.Column[] = [
-    { label: 'Data', prop: 'date', width: '150' },
+    {
+        label: 'Date',
+        prop: 'date',
+        width: '220',
+        headerRender: ({ column }) => h(ElTag, { type: 'danger' }, () => `${column.label}(渲染函数自定义表头)`)
+    },
     {
         label: 'Delivery Info',
+        headerSlot: 'deliveryHeader',
         children: [
             { label: 'Name', prop: 'name', width: '120' },
             {
                 label: 'Address Info',
+                headerRender: ({ column }) =>
+                    h(ElTag, { type: 'success' }, () => `${column.label}(渲染函数自定义表头)`),
                 children: [
-                    { label: 'State', prop: 'state', width: '120' },
+                    { label: 'State', prop: 'state', width: '240', headerSlot: 'stateHeader' },
                     { label: 'City', prop: 'city', width: '120' },
-                    { label: 'Address', prop: 'address' },
+                    {
+                        label: 'Address',
+                        prop: 'address',
+                        headerRender: ({ column }) =>
+                            h(ElTag, { type: 'warning' }, () => `${column.label}(渲染函数自定义表头)`)
+                    },
                     { label: 'Zip', width: '120', render: ({ row }) => h(ElTag, { type: 'success' }, () => row.zip) }
                 ]
             }

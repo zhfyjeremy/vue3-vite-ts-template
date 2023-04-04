@@ -12,11 +12,26 @@ const handleAction = (command: Table.Command, { row, $index }: { row: any; $inde
     <!-- eslint-disable-next-line vue/no-multiple-template-root -->
     <template v-if="col.children?.length">
         <el-table-column :label="col.label" :width="col.width" :align="col.align">
-            <TableColumn v-for="(item, index) in col.children" :col="item" :key="index" />
+            <TableColumn v-for="item in col.children" :col="item" :key="item.prop">
+                <template v-for="slot in Object.keys($slots)" #[slot]="scope: Record<string, any>">
+                    <slot :name="slot" v-bind="scope" />
+                </template>
+            </TableColumn>
+            <template #header="{ column, $index }">
+                <component v-if="col.headerRender" :is="col.headerRender" :column="column" :index="$index" />
+                <slot v-else-if="col.headerSlot" :name="col.headerSlot" :column="column" :index="$index"></slot>
+                <span v-else>{{ column.label }}</span>
+            </template>
         </el-table-column>
     </template>
     <!-- 其他正常列 -->
     <el-table-column v-else v-bind="col">
+        <!-- 自定义表头 -->
+        <template #header="{ column, $index }">
+            <component v-if="col.headerRender" :is="col.headerRender" :column="column" :index="$index" />
+            <slot v-else-if="col.headerSlot" :name="col.headerSlot" :column="column" :index="$index"></slot>
+            <span v-else>{{ column.label }}</span>
+        </template>
         <template #default="{ row, $index }">
             <!---图片 (START)-->
             <!-- 如需更改图片size，可自行配置参数 -->
@@ -51,27 +66,15 @@ const handleAction = (command: Table.Command, { row, $index }: { row: any; $inde
                 >
             </el-button-group>
             <!-- 如果传递按钮数组，就展示按钮组 END-->
-            <!-- render函数 (START) -->
-            <!-- 使用内置的component组件可以支持h函数渲染和txs语法 -->
+            <!-- render函数 (START) 使用内置的component组件可以支持h函数渲染和txs语法-->
             <component v-else-if="col.render" :is="col.render" :row="row" :index="$index" />
             <!-- render函数 (END) -->
             <!-- 自定义slot (START) -->
-            <slot v-else-if="col.slot" :slotName="col.slot" :row="row" :index="$index"></slot>
+            <slot v-else-if="col.slot" :name="col.slot" :row="row" :index="$index"></slot>
             <!-- 自定义slot (END) -->
             <!-- 默认渲染 (START) -->
             <span v-else>{{ row[col.prop!] }}</span>
             <!-- 默认渲染 (END) -->
-        </template>
-        <!-- 自定义表头 -->
-        <template #header="{ column, $index }">
-            <component v-if="col.headerRender" :is="col.headerRender" :column="column" :index="$index" />
-            <slot
-                v-else-if="col.headerSlot"
-                name="customHeader"
-                :slotName="col.headerSlot"
-                :column="column"
-                :index="$index"></slot>
-            <span v-else>{{ column.label }}</span>
         </template>
     </el-table-column>
 </template>

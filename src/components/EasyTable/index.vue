@@ -44,16 +44,13 @@
                         </template>
                     </el-table-column>
                     <!---复选框, 序号 (END)-->
+                    <!-- 渲染插槽 START -->
                     <TableColumnVue :col="col" v-else @command="handleAction">
-                        <!-- 自定义表头插槽 -->
-                        <template #customHeader="{ slotName, column, index }">
-                            <slot :name="slotName" :column="column" :index="index" />
-                        </template>
-                        <!-- 自定义列插槽 -->
-                        <template #default="{ slotName, row, index }">
-                            <slot :name="slotName" :row="row" :index="index" />
+                        <template v-for="slot in Object.keys($slots)" #[slot]="scope: Record<string, any>">
+                            <slot :name="slot" v-bind="scope" />
                         </template>
                     </TableColumnVue>
+                    <!-- 渲染插槽 END -->
                 </template>
             </el-table>
             <!-- 分页器 -->
