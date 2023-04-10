@@ -1,79 +1,10 @@
-<template>
-    <div class="p-5">
-        <el-card class="mb-5">
-            <template #header>
-                <div class="card-header">
-                    vue3 ts element plus
-                    table表格二次封装详细步骤。支持单元格内容、表头自定义渲染（支持使用作用域插槽、tsx 语法、h 函数）
-                </div>
-            </template>
-            <div class="mb-5">
-                <el-link
-                    type="primary"
-                    href="https://blog.csdn.net/weixin_45291937/article/details/125523244"
-                    target="_blank">
-                    可参考CSDN中的参数介绍
-                </el-link>
-            </div>
-            <p class="text-sm text-gray-500">也可以参考 @/components/table/doc.md 中的参数介绍</p>
-        </el-card>
-        <!-- 基本表格 -->
-        <el-card class="mb-5">
-            <template #header>
-                <div class="card-header">
-                    <span>基本表格</span>
-                </div>
-            </template>
-            <easy-table ref="easyTableRef" :columns="tableColumn" :table-data="tableData" @command="handleCommand">
-                <template #address="{ row }">
-                    <span>演示slot使用--->{{ row.address }}</span>
-                </template>
-            </easy-table>
-            <el-button class="mt-5" @click="handleSelection([tableData[1], tableData[2]])">选中第二、三行</el-button>
-        </el-card>
-        <!-- Render函数自定义列 -->
-        <el-card class="box-card mb-5">
-            <template #header>
-                <div class="card-header">
-                    <span>Render函数自定义列、自定义表头</span>
-                </div>
-            </template>
-            <easy-table :columns="tableColumn3" :table-data="tableData" @selection-change="handleSelection2">
-                <template #date="{ row }">
-                    <span> {{ row.date }}</span>
-                </template>
-                <!-- 插槽自定义表头 -->
-                <template #addressHeader="{ column }">
-                    <span>{{ column.label }}(插槽自定义表头)</span>
-                </template>
-            </easy-table>
-        </el-card>
-        <!-- 展开行 -->
-        <el-card class="mb-5">
-            <template #header>展开行</template>
-            <EasyTable :columns="tableColumns4" :table-data="tableData" />
-        </el-card>
-        <!-- 多级表头 -->
-        <el-card>
-            <template #header>多级表头</template>
-            <EasyTable :columns="tableColumns2" :table-data="tableData2">
-                <!-- 插槽自定义表头 -->
-                <template #deliveryHeader="{ column }: any">
-                    <p class="bg-red-400 text-white">{{ column.label }}(插槽自定义表头)</p>
-                </template>
-                <template #stateHeader="{ column }">
-                    <p class="bg-green-400 text-white">{{ column.label }}(插槽自定义表头)</p>
-                </template>
-            </EasyTable>
-        </el-card>
-    </div>
-</template>
 <script lang="ts" setup>
 import { ElButton, ElTable, ElTag } from 'element-plus'
 import { EasyMessage } from '@/components/EasyMessage'
 import dayjs from 'dayjs'
 interface IUser {
     date: number
+    status: number
     name: string
     address: string
 }
@@ -82,21 +13,25 @@ const tableData: IUser[] = [
     {
         date: 1660737564000,
         name: '佘太君',
+        status: 1,
         address: '上海市普陀区金沙江路 1516 弄'
     },
     {
         date: 1462291200000,
         name: '王小虎',
+        status: 1,
         address: '上海市普陀区金沙江路 1517 弄'
     },
     {
         date: 1462032000000,
         name: '王小帅',
+        status: 1,
         address: '上海市普陀区金沙江路 1519 弄'
     },
     {
         date: 1462204800000,
         name: '王小呆',
+        status: 0,
         address: '上海市普陀区金沙江路 1516 弄'
     }
 ]
@@ -221,6 +156,44 @@ const tableColumns2: Table.Column[] = [
         ]
     }
 ]
+const statuList = [
+    { label: '正常', value: 1 },
+    { label: '禁用', value: 0 }
+]
+// 开启表格搜索配置
+const tableSearchColumn: Table.Column[] = [
+    { type: 'selection', width: '50' },
+    { type: 'index', width: '50', label: 'No.' },
+    { prop: 'name', label: '名字', search: true },
+    {
+        prop: 'status',
+        label: '状态',
+        search: true,
+        searchFiledType: 'select',
+        searchFieldOption: {
+            data: statuList
+        },
+        render: ({ row }) =>
+            h(ElTag, { type: row.status === 1 ? 'success' : 'danger' }, () => (row.status === 1 ? '正常' : '禁用'))
+    },
+    {
+        type: 'date',
+        prop: 'date',
+        label: '日期',
+        search: true,
+        searchFiledType: 'daterange',
+        searchFieldOption: { valueFormat: 'x' }
+    },
+    { prop: 'address', label: '地址', slot: 'address', showOverflowTooltip: true },
+    {
+        width: '150',
+        label: '操作',
+        buttons: [
+            { name: '编辑', type: 'success', command: 'edit' },
+            { name: '删除', type: 'danger', command: 'delete' }
+        ]
+    }
+]
 const tableData2 = [
     {
         date: '2016-05-03',
@@ -314,5 +287,98 @@ const handleRenderEdit = (row: IUser, index: number) => {
 const handleRenderDelete = (row: IUser, index: number) => {
     EasyMessage.error(`${row.name} ----- ${index}`)
 }
+// 搜索事件
+const handleSearch = (info: any) => {
+    console.log(info)
+}
 </script>
-<style lang="scss" scoped></style>
+<template>
+    <div class="p-5">
+        <el-card class="mb-5">
+            <template #header>
+                <div class="card-header">
+                    vue3 ts element plus
+                    table表格二次封装详细步骤。支持单元格内容、表头自定义渲染（支持使用作用域插槽、tsx 语法、h 函数）
+                </div>
+            </template>
+            <div class="mb-5">
+                <el-link
+                    type="primary"
+                    href="https://blog.csdn.net/weixin_45291937/article/details/125523244"
+                    target="_blank">
+                    可参考CSDN中的参数介绍
+                </el-link>
+            </div>
+            <p class="text-sm text-gray-500">也可以参考 @/components/table/doc.md 中的参数介绍</p>
+        </el-card>
+        <!-- 基本表格 -->
+        <el-card class="mb-5">
+            <template #header>
+                <div class="card-header">
+                    <span>基本表格</span>
+                </div>
+            </template>
+            <easy-table ref="easyTableRef" :columns="tableColumn" :table-data="tableData" @command="handleCommand">
+                <template #address="{ row }">
+                    <span>演示slot使用--->{{ row.address }}</span>
+                </template>
+            </easy-table>
+            <el-button class="mt-5" @click="handleSelection([tableData[1], tableData[2]])">选中第二、三行</el-button>
+        </el-card>
+        <!-- Render函数自定义列 -->
+        <el-card class="box-card mb-5">
+            <template #header>
+                <div class="card-header">
+                    <span>Render函数自定义列、自定义表头</span>
+                </div>
+            </template>
+            <easy-table :columns="tableColumn3" :table-data="tableData" @selection-change="handleSelection2">
+                <template #date="{ row }">
+                    <span> {{ row.date }}</span>
+                </template>
+                <!-- 插槽自定义表头 -->
+                <template #addressHeader="{ column }">
+                    <span>{{ column.label }}(插槽自定义表头)</span>
+                </template>
+            </easy-table>
+        </el-card>
+        <!-- 展开行 -->
+        <el-card class="mb-5">
+            <template #header>展开行</template>
+            <EasyTable :columns="tableColumns4" :table-data="tableData" />
+        </el-card>
+        <!-- 多级表头 -->
+        <el-card class="mb-5">
+            <template #header>多级表头</template>
+            <EasyTable :columns="tableColumns2" :table-data="tableData2">
+                <!-- 插槽自定义表头 -->
+                <template #deliveryHeader="{ column }: any">
+                    <p class="bg-red-400 text-white">{{ column.label }}(插槽自定义表头)</p>
+                </template>
+                <template #stateHeader="{ column }">
+                    <p class="bg-green-400 text-white">{{ column.label }}(插槽自定义表头)</p>
+                </template>
+            </EasyTable>
+        </el-card>
+        <!-- 开启表格搜索 -->
+        <el-card class="mb-5">
+            <template #header>
+                <div class="card-header">
+                    <span>开启表格搜索</span>
+                </div>
+            </template>
+            <easy-table
+                :options="{
+                    showSearch: true
+                }"
+                :columns="tableSearchColumn"
+                :table-data="tableData"
+                @command="handleCommand"
+                @search="handleSearch">
+                <template #address="{ row }">
+                    <span>演示slot使用--->{{ row.address }}</span>
+                </template>
+            </easy-table>
+        </el-card>
+    </div>
+</template>

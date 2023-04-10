@@ -5,7 +5,7 @@ declare namespace Table {
     type Size = 'large' | 'default' | 'small'
     type Align = 'left' | 'center' | 'right'
     type Command = string | number
-    type SearchFiledType = 'input' | 'select' | 'date'
+    type SearchFiledType = 'input' | 'select' | 'daterange'
     type DateFormat = 'YYYY-MM-DD' | 'YYYY-MM-DD HH:mm:ss' | 'YYYY-MM-DD HH:mm' | 'YYYY-MM'
     type Order = 'ascending' | 'descending'
     interface ButtonItem {
@@ -22,11 +22,15 @@ declare namespace Table {
     }
     // searchFiledType === 'select' 时的需要的参数类型
     interface ISearchFieldOptions {
-        data: Recode<string, any>[]
+        data?: Recode<string, any>[]
         labelkey?: string // data 数据中对应的key的字段名
         valueKey?: string // data 数据中对应的value的字段名
-        placeholder?: string
+        placeholder?: string // 普通提示语
         value?: any // 下拉框默认回显的值
+        rangeSeparator?: string // 选择范围时的分隔符
+        startPlaceholder?: string // 范围选择时开始日期的占位内容
+        endPlaceholder?: string // 范围选择时结束日期的占位内容
+        valueFormat?: string // 可选，绑定值的格式。 不指定则绑定值为 Date 对象 详情 https://day.js.org/docs/en/display/format#list-of-all-available-formats
     }
     interface Column {
         type?: Type
