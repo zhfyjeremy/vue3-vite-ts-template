@@ -1,9 +1,5 @@
 <template>
-    <svg
-        aria-hidden="true"
-        class="svg-icon"
-        :style="{ 'font-size': parseInt(size as string) + 'px' }"
-    >
+    <svg aria-hidden="true" class="svg-icon" :style="{ 'font-size': iconSize }">
         <use :xlink:href="symbolId" :fill="color" />
     </svg>
 </template>
@@ -17,15 +13,17 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), { size: 16 })
 const symbolId = computed(() => `#icon-${props.iconClass}`)
+
+const iconSize = computed(() => `${parseInt(props.size.toString())}px`)
 </script>
 
 <style scoped>
 .svg-icon {
     width: 1em;
     height: 1em;
-    vertical-align: -0.15em;
     overflow: hidden;
     fill: currentColor;
     display: inline;
+    padding: 1px;
 }
 </style>

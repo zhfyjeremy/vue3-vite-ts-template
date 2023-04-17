@@ -6,7 +6,7 @@ const handleRefresh = () => {
 <template>
     <div class="flex-center flex-col md:flex-row h-screen">
         <div>
-            <svg-icon size="400" icon-class="500" />
+            <easy-icon size="400" icon="svg:500" />
         </div>
         <div class="p-5">
             <h1 class="text-6xl text-primary-default mb-8">糟糕！</h1>

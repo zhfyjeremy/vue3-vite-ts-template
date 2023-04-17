@@ -10,7 +10,7 @@
             </router-link>
         </div>
         <div>
-            <svg-icon size="400" icon-class="401" />
+            <easy-icon size="400" icon="svg:401" />
         </div>
     </div>
 </template>

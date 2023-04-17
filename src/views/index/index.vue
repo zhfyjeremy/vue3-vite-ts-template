@@ -2,7 +2,6 @@
     <div>
         <p class="text-white text-5xl bg-primary-default py-28 text-center">This is Home view</p>
         <div class="p-10">
-            <div class="py-6 border-b">svgIcon: <svg-icon icon-class="loading" /></div>
             <div class="py-6 border-b">
                 <el-button @click="handleShowLoading"> Show Loading </el-button>
             </div>
@@ -11,19 +10,6 @@
             </div>
             <div class="py-6 border-b">
                 <el-button @click="handleShowElementMessage"> Element MessageBox </el-button>
-            </div>
-            <div>
-                <p>Element Icons Auto Import</p>
-                <el-icon><ElIconPlus /></el-icon>
-                <el-icon><ElIconMinus /></el-icon>
-                <el-icon><ElIconCirclePlus /></el-icon>
-                <pre class="bg-gray-700 text-gray-200 rounded-lg">
-                    <code>
-                        &lt;el-icon&gt;&lt;ElIconPlus /&gt;&lt;/el-icon&gt;
-                        &lt;el-icon&gt;&lt;ElIconMinus /&gt;&lt;/el-icon&gt;
-                        &lt;el-icon&gt;&lt;ElIconCirclePlus /&gt;&lt;/el-icon&gt;
-                    </code>
-                </pre>
             </div>
         </div>
     </div>

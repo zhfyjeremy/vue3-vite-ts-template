@@ -2,7 +2,7 @@ import './index.scss'
 import { ElIcon } from 'element-plus'
 import { SuccessFilled, CircleCloseFilled, InfoFilled, WarningFilled, Close } from '@element-plus/icons-vue'
 import { Transition } from 'vue'
-import SvgIcon from '@/components/SvgIcon/index.vue'
+import EasyIcon from '@/components/EasyIcon/index.vue'
 const messageMaxLength = 8 // 当为toast风格且icon不等于none的情况下最多显示8个字符
 function resetOptions(): IEasyMessageOptions {
     return {
@@ -101,7 +101,7 @@ export default defineComponent({
                         class="is-loading"
                         color="var(--el-color-primary)"
                         v-show={defaultOpt.value.type === 'loading'}>
-                        <SvgIcon iconClass="loading" />
+                        <EasyIcon icon="svg:loading" />
                     </ElIcon>
                     <span class="ml-1">{defaultOpt.value.message}</span>
                     <ElIcon
@@ -134,7 +134,7 @@ export default defineComponent({
                                 color="#fff"
                                 size={40}
                                 v-show={defaultOpt.value.type === 'loading'}>
-                                <SvgIcon size={40} iconClass="loading" />
+                                <EasyIcon size={40} icon="svg:loading" />
                             </ElIcon>
                         </div>
                         <span>{formatToastMsg.value(defaultOpt.value.message as string)}</span>
