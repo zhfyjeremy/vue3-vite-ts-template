@@ -2,6 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@element-plus/icons-vue': ^2.0.10
+  '@iconify/vue': ^4.1.1
   '@types/js-cookie': ^3.0.2
   '@types/nprogress': ^0.2.0
   '@types/qs': ^6.9.7
@@ -52,6 +53,7 @@ dependencies:
   vue-router: 4.1.6_vue@3.2.47
 
 devDependencies:
+  '@iconify/vue': 4.1.1_vue@3.2.47
   '@types/js-cookie': 3.0.3
   '@types/nprogress': 0.2.0
   '@types/qs': 6.9.7
@@ -680,6 +682,15 @@ packages:
       local-pkg: 0.4.3
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /@iconify/vue/4.1.1_vue@3.2.47:
+    resolution: {integrity: sha512-RL85Bm/DAe8y6rT6pux7D2FJSiUEM/TPfyK7GrbAOfTSwrhvwJW+S5yijdGcmtXouA8MtuH9C7l4hiSE4mLMjg==}
+    peerDependencies:
+      vue: '>=3'
+    dependencies:
+      '@iconify/types': 2.0.0
+      vue: 3.2.47
     dev: true
 
   /@jridgewell/gen-mapping/0.1.1:
