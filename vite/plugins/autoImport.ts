@@ -40,9 +40,7 @@ export default (plugins: PluginOption[]) => {
             resolvers: [
                 // Auto register icon components
                 // 自动注册图标组件
-                IconsResolver({
-                    enabledCollections: ['el']
-                }),
+                IconsResolver(),
                 ElementPlusResolver({
                     // 自动引入修改主题色添加这一行，使用预处理样式
                     importStyle: 'sass'
