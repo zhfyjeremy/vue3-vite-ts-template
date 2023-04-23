@@ -78,7 +78,7 @@ class RequestHttp {
                     ElMessage.error(data.msg)
                     return Promise.reject(data)
                 }
-                // * 全局错误信息拦截（防止下载文件得时候返回数据流，没有code，直接报错）
+                // 全局错误信息拦截（防止下载文件得时候返回数据流，没有code，直接报错）
                 if (data.code !== ResultEnum.SUCCESS) {
                     ElMessage.error(data.msg)
                     return Promise.reject(data)
@@ -100,9 +100,24 @@ class RequestHttp {
                 this.showMessage = IS_SHOW_MSG
                 this.isReturnAllResult = IS_RETURN_ALL_RESULT
                 // 根据响应的错误状态码，做不同的处理
-                if (response) checkStatus(response)
+                if (response) {
+                    checkStatus(response)
+                    return Promise.reject(error)
+                }
                 // 服务器结果都没有返回(可能服务器错误可能客户端断网)，断网处理:可以跳转到断网页面
-                if (!window.navigator.onLine) router.replace({ path: '/500' })
+                if (!window.navigator.onLine) {
+                    router.replace({ path: '/500' })
+                    return Promise.reject(error)
+                }
+                // 如果code === ECONNABORTED 代表请求超时
+                if (
+                    error.code === 'ECONNABORTED' ||
+                    error.message === 'Network Error' ||
+                    error.message.includes('timeout')
+                ) {
+                    ElMessage.error('请求超时，请稍后重试')
+                    return Promise.reject(error)
+                }
                 return Promise.reject(error)
             }
         )
