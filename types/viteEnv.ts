@@ -2,10 +2,6 @@
 // / <reference types="vue/macros-global" />
 
 export interface ImportMetaEnv {
-    VITE_API_URL: string
+    VITE_API_BASEURL: string
     VITE_MOCK_ENABLE: boolean
 }
-
-// interface ImportMeta {
-//     readonly env: ImportMetaEnv
-// }

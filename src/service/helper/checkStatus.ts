@@ -8,7 +8,7 @@ export const checkStatus = (res: any): void => {
             ElMessage.error('请求失败！请您稍后重试')
             break
         case 401:
-            ElMessage.error(res.data.msg)
+            ElMessage.error('当前登录信息已过期')
             break
         case 403:
             ElMessage.error('当前账号无权限访问！')
