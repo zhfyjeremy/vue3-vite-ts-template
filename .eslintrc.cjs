@@ -90,6 +90,8 @@ module.exports = {
         'prefer-destructuring': ['error', { array: false, object: false }, { enforceForRenamedProperties: true }], // 要求优先使用结构赋值,enforceForRenamedProperties为true将规则应用于重命名的变量
         'prefer-template': 'error', // 使用模板字符串，而不是字符串拼接
         'rest-spread-spacing': 'error', // 扩展运算符...和表达式之间不允许有空格，如... re1错误，应该是...re1
-        'template-curly-spacing': 'error' // 禁止模板字符串${}内前后有空格
+        'template-curly-spacing': 'error', // 禁止模板字符串${}内前后有空格
+        '@typescript-eslint/no-non-null-assertion': 0, // 关闭使用！断言非 undefined  出现黄色警告
+        '@typescript-eslint/no-unused-vars': 0 // 使用 _ 占位时，禁止出现黄色警告
     }
 }
