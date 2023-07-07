@@ -3,6 +3,7 @@ import autoImport from './autoImport'
 import setupVue from './vue'
 import setupSvgIconplugin from './svgIcon'
 import setupTsx from './tsx'
+import setupMockPlugin from './mock'
 import { ImportMetaEnv } from '../../types/viteEnv'
 const plugins: Plugin[] = []
 
@@ -12,5 +13,6 @@ export default function setupPlugins(isBuild: boolean, env: ImportMetaEnv) {
     setupTsx(plugins)
     autoImport(plugins)
     setupSvgIconplugin(plugins)
+    setupMockPlugin(plugins, isBuild, env)
     return plugins
 }

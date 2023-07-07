@@ -15,6 +15,7 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
             alias
         },
         plugins: [...setupPlugins(isBuild, env)],
-        css
+        css,
+        assetsInclude: ['**/*.md']
     }
 })
