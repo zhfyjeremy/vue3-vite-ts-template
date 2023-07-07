@@ -38,6 +38,7 @@
 </template>
 
 <script setup lang="ts">
+import { Refresh } from '@element-plus/icons-vue'
 export type TableSize = 'large' | 'default' | 'small'
 interface IProps {
     modelValue: string

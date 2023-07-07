@@ -18,21 +18,14 @@
         </slot>
         <!-- table表格 -->
         <el-config-provider :size="tableSize">
-            <el-table
-                ref="tableRef"
-                :data="tableData"
-                v-bind="_options"
-                @selection-change="handleSelectionChange"
-                @row-click="handleRowClick"
-                @cell-click="handleCellClick"
-                @sort-change="handleSortChange">
+            <el-table ref="tableRef" :data="tableData" v-bind="{ ...$attrs, ..._options }">
                 <!-- eslint-disable-next-line vue/no-v-for-template-key -->
                 <template v-for="(col, index) in columns" :key="index">
                     <!---复选框, 序号 (START)-->
                     <el-table-column
                         v-if="col.type === 'index' || col.type === 'selection' || col.type === 'expand'"
                         :index="indexMethod"
-                        v-bind="col">
+                        v-bind="(col as ITableProps<any>)">
                         <!-- 当type等于expand时， 配置通过h函数渲染、txs语法或者插槽自定义内容 -->
                         <template #default="{ row, $index }">
                             <!-- render函数 (START) : 使用内置的component组件可以支持h函数渲染和txs语法 -->
@@ -68,7 +61,7 @@ import TableColumnVue from './TableColumn.vue'
 import TableSearchVue from './TableSearch.vue'
 import TableToolbarVue, { type TableSize } from './TableToolbar.vue'
 import { useFullscreen } from '@vueuse/core'
-import { ElTable } from 'element-plus'
+import { ElTable, type TableProps as ITableProps } from 'element-plus'
 import { ComputedRef } from 'vue'
 import type { TableColumnCtx } from 'element-plus/es/components/table/src/table-column/defaults'
 import { EasyMessage } from '../EasyMessage'
@@ -93,10 +86,8 @@ const tableWrap = ref<HTMLElement | null>(null)
 const _options: ComputedRef<Table.Options> = computed(() => {
     const option = {
         stripe: false,
-        tooltipEffect: 'dark',
         showHeader: true,
         showPagination: false
-        // rowStyle: () => 'cursor:pointer' // 行样式
     }
     return Object.assign(option, props?.options)
 })
@@ -111,18 +102,48 @@ const _paginationConfig = computed(() => {
     }
     return Object.assign(config, _options.value.paginationConfig)
 })
-const emit = defineEmits([
-    'selection-change', // 当选择项发生变化时会触发该事件
-    'row-click', // 当某一行被点击时会触发该事件
-    'cell-click', // 当某个单元格被点击时会触发该事件
-    'command', // 按钮组事件
-    'size-change', // pageSize事件
-    'current-change', // currentPage按钮组事件
-    'pagination-change', // currentPage或者pageSize改变触发
-    'search', // 搜索
-    'sort-change', // 列排序发生改变触发
-    'refresh' // 工具栏刷新按钮重新刷新
-])
+/**
+ *  获取 element plus table 的事件类型
+ *  type ElTableEmitsType = TableInstance['$emit']
+ *  type EmitsEvent = { (event: Event, ...args: any[]): void } & ElTableEmitsType
+ *  但是 vite 加载失败，无法解析 报错如下
+ *  [@vue/compiler-sfc] Unresolvable type reference or unsupported built-in utility type
+ *  暂时没找到更好的解决办法
+ *  所以，暂时先手动定义 element  表格的事件类型
+ */
+// element table 的事件
+const elementEvents = [
+    'select',
+    'select-all',
+    'selection-change',
+    'cell-mouse-enter',
+    'cell-mouse-leave',
+    'cell-contextmenu',
+    'cell-click',
+    'cell-dblclick',
+    'row-click',
+    'row-contextmenu',
+    'row-dblclick',
+    'header-click',
+    'header-contextmenu',
+    'sort-change',
+    'filter-change',
+    'current-change',
+    'header-dragend',
+    'expand-change'
+] as const
+type ElTableEmitsType = (typeof elementEvents)[number]
+type Event =
+    | 'command' // 按钮组事件
+    | 'size-change' // pageSize事件
+    | 'current-change' // currentPage按钮组事件
+    | 'pagination-change' // currentPage或者pageSize改变触发
+    | 'search' // 工具栏刷新按钮重新刷新
+    | 'refresh' // 工具栏刷新按钮重新刷新
+    | ElTableEmitsType // element plus table 事件
+
+type EmitsEvent = (event: Event, ...args: any[]) => void
+const emit = defineEmits<EmitsEvent>()
 const { isSupported, isFullscreen, toggle } = useFullscreen(tableWrap)
 
 // 切换表格全屏
@@ -155,25 +176,9 @@ const currentPageChange = (currentPage: number) => {
 const handleAction = (command: Table.Command, row: any, index: number) => {
     emit('command', command, row, index)
 }
-// 多选事件
-const handleSelectionChange = (val: any[]) => {
-    emit('selection-change', val)
-}
-// 当某一行被点击时会触发该事件
-const handleRowClick = (row: any, column: TableColumnCtx<any>, event: MouseEvent) => {
-    emit('row-click', row, column, event)
-}
-// 当某个单元格被点击时会触发该事件
-const handleCellClick = (row: any, column: TableColumnCtx<any>, cell: any, event: MouseEvent) => {
-    emit('cell-click', row, column, cell, event)
-}
-// 当表格的排序条件发生变化的时候会触发该事件
-// 在列中设置 sortable 属性即可实现以该列为基准的排序， 接受一个 Boolean，默认为 false。 可以通过 Table 的 default-sort 属性设置默认的排序列和排序顺序。 如果需要后端排序，需将 sortable 设置为 custom，同时在 Table 上监听 sort-change 事件， 在事件回调中可以获取当前排序的字段名和排序顺序，从而向接口请求排序后的表格数据。
-const handleSortChange = ({ column, prop, order }: SortParams<any>) => {
-    emit('sort-change', { column, prop, order })
-}
+
 // 暴露给父组件参数和方法，如果外部需要更多的参数或者方法，都可以从这里暴露出去。
-defineExpose({ element: tableRef })
+defineExpose({ element: tableRef, search: handleSearch })
 </script>
 <style lang="scss" scoped>
 :deep(.el-image__inner) {

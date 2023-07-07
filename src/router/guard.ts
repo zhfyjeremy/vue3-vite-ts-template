@@ -18,7 +18,10 @@ export default class RouterPermission {
             const { token } = userStore
             // 判断用户是否登录
             if (!token) {
-                // 判断当前路由是否需要登录
+                /**
+                 * 判断当前路由是否需要登录
+                 *     也可以在路由的元信息中设置一个是否需要登录的标识来验证
+                 */
                 if (whiteList.includes(to.path)) return next() // 放行
                 // 判断是否需要登录权限
                 if (to.path.includes('/redirect/')) next()

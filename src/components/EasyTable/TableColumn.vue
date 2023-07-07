@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { type TableProps } from 'element-plus'
 import dayjs from 'dayjs'
 defineProps<{ col: Table.Column }>()
 const emit = defineEmits(['command'])
@@ -25,7 +26,7 @@ const handleAction = (command: Table.Command, { row, $index }: { row: any; $inde
         </el-table-column>
     </template>
     <!-- 其他正常列 -->
-    <el-table-column v-else v-bind="col">
+    <el-table-column v-else v-bind="(col as TableProps<any>)">
         <!-- 自定义表头 -->
         <template #header="{ column, $index }">
             <component v-if="col.headerRender" :is="col.headerRender" :column="column" :index="$index" />
