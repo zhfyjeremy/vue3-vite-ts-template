@@ -25,7 +25,7 @@ export default defineComponent({
             if (msg.length > messageMaxLength) return msg.substring(0, messageMaxLength)
             return msg
         })
-        let timer: any
+        let timer: ReturnType<typeof setTimeout>
         const closeMessage = () => {
             clearTimeout(timer)
             isShow.value = false
@@ -90,11 +90,21 @@ export default defineComponent({
             <div class={messageClass.value}>
                 <div class="message-content">
                     <ElIcon v-show={defaultOpt.value.type !== 'none' && defaultOpt.value.type !== 'loading'} size={18}>
-                        <SuccessFilled color="var(--el-color-success)" v-show={defaultOpt.value.type === 'success'} />
-                        <InfoFilled color="#2080f0" v-show={defaultOpt.value.type === 'info'} />
-                        <InfoFilled color="var(--el-color-info)" v-show={defaultOpt.value.type === 'default'} />
-                        <WarningFilled color="var(--el-color-warning)" v-show={defaultOpt.value.type === 'warning'} />
-                        <CircleCloseFilled color="var(--el-color-danger)" v-show={defaultOpt.value.type === 'error'} />
+                        <span style={{ color: 'var(--el-color-success)' }} v-show={defaultOpt.value.type === 'success'}>
+                            <SuccessFilled />
+                        </span>
+                        <span style={{ color: 'var(--el-color-info)' }} v-show={defaultOpt.value.type === 'info'}>
+                            <InfoFilled />
+                        </span>
+                        <span style={{ color: '#ccc' }} v-show={defaultOpt.value.type === 'default'}>
+                            <InfoFilled />
+                        </span>
+                        <span style={{ color: 'var(--el-color-warning)' }} v-show={defaultOpt.value.type === 'warning'}>
+                            <WarningFilled />
+                        </span>
+                        <span style={{ color: 'var(--el-color-danger)' }} v-show={defaultOpt.value.type === 'error'}>
+                            <CircleCloseFilled />
+                        </span>
                     </ElIcon>
                     <ElIcon
                         size={18}
@@ -104,14 +114,15 @@ export default defineComponent({
                         <EasyIcon icon="svg:loading" />
                     </ElIcon>
                     <span class="ml-1">{defaultOpt.value.message}</span>
-                    <ElIcon
-                        onClick={closeMessage}
-                        size={18}
-                        v-show={(defaultOpt.value?.duration as number) <= 0 && defaultOpt.value.type !== 'loading'}
-                        class="ml-2 cursor-pointer"
-                        color="#bdc3c7">
-                        <Close />
-                    </ElIcon>
+                    <span onClick={closeMessage}>
+                        <ElIcon
+                            size={18}
+                            v-show={(defaultOpt.value?.duration as number) <= 0 && defaultOpt.value.type !== 'loading'}
+                            class="ml-2 cursor-pointer"
+                            color="#bdc3c7">
+                            <Close />
+                        </ElIcon>
+                    </span>
                 </div>
             </div>
         )
@@ -140,14 +151,15 @@ export default defineComponent({
                         <span>{formatToastMsg.value(defaultOpt.value.message as string)}</span>
                     </div>
 
-                    <ElIcon
-                        onClick={closeMessage}
-                        size={18}
-                        v-show={(defaultOpt.value?.duration as number) <= 0 && defaultOpt.value.type === 'none'}
-                        class="ml-2 cursor-pointer"
-                        color="#bdc3c7">
-                        <Close />
-                    </ElIcon>
+                    <span onClick={closeMessage}>
+                        <ElIcon
+                            size={18}
+                            v-show={(defaultOpt.value?.duration as number) <= 0 && defaultOpt.value.type === 'none'}
+                            class="ml-2 cursor-pointer"
+                            color="#bdc3c7">
+                            <Close />
+                        </ElIcon>
+                    </span>
                 </div>
             </div>
         )
