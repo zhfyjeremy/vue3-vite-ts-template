@@ -30,7 +30,6 @@ const handleClick = (tab: TabsPaneContext) => {
             <el-tab-pane label="基本表格" name="table.base" />
             <el-tab-pane label="分页表格" name="table.pagination" />
             <el-tab-pane label="展开行" name="table.expand" />
-            <el-tab-pane label="开启搜索" name="table.search" />
             <el-tab-pane label="多级表头" name="table.groupHead" />
         </el-tabs>
         <div class="min-h-[500px]">

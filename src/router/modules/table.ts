@@ -31,14 +31,6 @@ export default [
                         }
                     },
                     {
-                        path: 'search',
-                        name: 'table.search',
-                        component: () => import('@/views/table/search.vue'),
-                        meta: {
-                            title: '开启搜索'
-                        }
-                    },
-                    {
                         path: 'expand',
                         name: 'table.expand',
                         component: () => import('@/views/table/expand.vue'),
