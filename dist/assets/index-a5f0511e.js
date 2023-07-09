@@ -1,0 +1,1 @@
+import{a6 as e,F as t,O as c}from"./index-13efeb1f.js";const s={},r={class:"flex-center text-white text-5xl bg-primary-default py-80"};function n(o,a){return t(),c("div",r,"This is About view")}const _=e(s,[["render",n]]);export{_ as default};
