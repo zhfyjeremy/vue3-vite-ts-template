@@ -72,7 +72,7 @@
 
 | 参数 | 说明 | 类型 | 是否必填 | 默认值 |
 | :-- | :-- | :-- | --- | --- |
-| type | 当单元格可编辑时， 展示的元素类型 | 'Input' / 'Select' / 'DatePicker' / 'TimePicker' / 'Switch' / 'InputNumber' | 否 | 'Input' |
+| componentType | 当单元格可编辑时， 展示的元素类型 | 'Input' / 'Select' / 'DatePicker' / 'TimePicker' / 'Switch' / 'InputNumber' | 否 | 'Input' |
 | [key: string] | 单元格编辑时，传递的额外参数。type 指定的类型就是编辑时用到的组件，具体参数请参考 element-plus 官网中的属性介绍 | any | 否 | - |
 
 #### Buttons 配置项
