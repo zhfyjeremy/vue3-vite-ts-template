@@ -26,6 +26,10 @@ const handleClick = (tab: TabsPaneContext) => {
             </div>
             <p class="text-sm text-gray-500">也可以参考 @/components/table/doc.md 中的参数介绍</p>
             <div class="bg-gray-100 py-3 px-5 mt-4 rounded-md text-xs text-gray-500">
+                <p class="flex items-center mb-1.5 text-sm text-primary-default">
+                    <easy-icon icon="svg:branch" size="20" />
+                    <span>master</span>
+                </p>
                 <p class="mb-1.5">template_phase_1.0分支： 使用 tempalte 封装, 最基本的功能，代码简单，方便自己扩展</p>
                 <p class="mb-1.5">
                     template_phase_2.0分支： 使用 tempalte 封装, 在1.0 基础上做了优化。在编码时更好的类型支持，支持原
