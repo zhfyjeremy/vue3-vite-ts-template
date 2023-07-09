@@ -1,70 +1,53 @@
 <script lang="ts" setup>
 import { EasyMessage } from '@/components/EasyMessage'
-import { ElTag } from 'element-plus'
 interface IUser {
     date: number
-    status: number
     name: string
     address: string
 }
-// 表格数据
 const tableData: IUser[] = [
     {
         date: 1660737564000,
         name: '佘太君',
-        status: 1,
         address: '上海市普陀区金沙江路 1516 弄'
     },
     {
         date: 1462291200000,
         name: '王小虎',
-        status: 1,
         address: '上海市普陀区金沙江路 1517 弄'
     },
     {
         date: 1462032000000,
         name: '王小帅',
-        status: 1,
         address: '上海市普陀区金沙江路 1519 弄'
     },
     {
         date: 1462204800000,
         name: '王小呆',
-        status: 0,
         address: '上海市普陀区金沙江路 1516 弄'
     }
 ]
-const statuList = [
-    { label: '正常', value: 1 },
-    { label: '禁用', value: 0 }
-]
-// 开启表格搜索配置
-const tableSearchColumn: Table.Column<IUser>[] = [
+const tableColumn: Table.Column<IUser>[] = [
     { type: 'selection', width: '50' },
     { type: 'index', width: '50', label: 'No.' },
     { prop: 'name', label: '名字', search: true },
     {
-        prop: 'status',
-        label: '状态',
-        search: true,
-        searchFiledType: 'Select',
-        searchFieldOptions: {
-            data: statuList
-        },
-        render: ({ row }) =>
-            h(ElTag, { type: row.status === 1 ? 'success' : 'danger' }, () => (row.status === 1 ? '正常' : '禁用'))
-    },
-    {
-        type: 'date',
         prop: 'date',
         label: '日期',
+        type: 'date',
         search: true,
         searchFiledType: 'DatePicker',
-        searchFieldOptions: { valueFormat: 'x' }
+        searchFieldOptions: {
+            placeholder: '请选择日期',
+            valueFormat: 'x',
+            type: 'daterange',
+            'start-placeholder': 'Start Date',
+            'end-placeholder': 'End Date'
+        }
     },
-    { prop: 'address', label: '地址', slot: 'address', showOverflowTooltip: true },
+    { prop: 'address', label: '地址', showOverflowTooltip: true, search: true },
     {
-        width: '150',
+        width: '180',
         label: '操作',
         buttons: [
             { name: '编辑', type: 'success', command: 'edit' },
@@ -72,45 +55,20 @@ const tableSearchColumn: Table.Column<IUser>[] = [
         ]
     }
 ]
-const handleCommand = (command: Table.Command, row: any, index: number) => {
-    switch (command) {
-        case 'edit':
-            EasyMessage.success(`编辑--${row.name} ----- ${index}`)
-            break
-        case 'delete':
-            EasyMessage.error(`删除--${row.name} ----- ${index}`)
-            break
-        default:
-            break
-    }
-}
-
-// 搜索事件
-const handleSearch = (info: any) => {
-    EasyMessage.success('搜索参数在控制台中查看')
-    console.log(info)
+const handleSearch = (params: Record<string, any>) => {
+    EasyMessage.success(JSON.stringify(params))
 }
 </script>
 <template>
-    <!-- 开启表格搜索 -->
-    <el-card class="mb-5">
-        <template #header>
-            <div class="card-header">
-                <span>开启表格搜索</span>
-            </div>
-        </template>
-        <easy-table
-            :options="{
-                showSearch: true
-            }"
-            :columns="tableSearchColumn"
-            :table-data="tableData"
-            @command="handleCommand"
-            @search="handleSearch">
-            <template #address="{ row }">
-                <span>演示slot使用--->{{ row.address }}</span>
-            </template>
-        </easy-table>
-    </el-card>
+    <div class="p-5">
+        <el-card>
+            <template #header>开启表格搜索</template>
+            <easy-table
+                :columns="tableColumn"
+                :table-data="tableData"
+                :options="{ showSearch: true }"
+                @search="handleSearch" />
+        </el-card>
+    </div>
 </template>
 <style lang="scss" scoped></style>

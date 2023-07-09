@@ -53,6 +53,14 @@ export default [
                         meta: {
                             title: '多级表头'
                         }
+                    },
+                    {
+                        path: 'editCell',
+                        name: 'table.editCell',
+                        component: () => import('@/views/table/editCell.vue'),
+                        meta: {
+                            title: '编辑单元格'
+                        }
                     }
                 ]
             }

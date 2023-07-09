@@ -31,7 +31,7 @@ declare namespace Table {
     }
 
     interface IEditOptions {
-        type: ComponentType // 当单元格可编辑时， 展示的元素类型
+        componentType: ComponentType // 当单元格可编辑时， 展示的元素类型
         [key: string]: any // 单元格编辑时，传递的额外参数。type 指定的类型就是编辑时用到的组件，具体参数请参考 element-plus 官网中的属性介绍
     }
     interface Column<RecordType = any> extends Partial<TableColumnCtx<RecordType>> {
