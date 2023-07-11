@@ -10,10 +10,8 @@ declare namespace Table {
     type Command = string | number
     type DateFormat = 'YYYY-MM-DD' | 'YYYY-MM-DD HH:mm:ss' | 'YYYY-MM-DD HH:mm' | 'YYYY-MM'
     type Order = 'ascending' | 'descending'
-    type BeforeEditSubmitParams<T = any> = { row: T; key: string; value: any; index: number }
-    type EditRule = boolean | ((value: any, callback: function) => void)
     // 当单元格可编辑时， 展示的元素类型
-    type ComponentType = 'Input' | 'Select' | 'DatePicker' | 'TimePicker' | 'Switch' | 'InputNumber'
+    type ComponentType = 'Input' | 'Select' | 'DatePicker'
     interface ButtonItem {
         name: string
         command: Command
@@ -30,10 +28,6 @@ declare namespace Table {
         [key: string]: any // 展示不同类型的搜索组件时，传递的额外参数。searchFiledType 指定的类型就是编辑时用到的组件，具体参数请参考 element-plus 官网中的属性介绍
     }
 
-    interface IEditOptions {
-        type: ComponentType // 当单元格可编辑时， 展示的元素类型
-        [key: string]: any // 单元格编辑时，传递的额外参数。type 指定的类型就是编辑时用到的组件，具体参数请参考 element-plus 官网中的属性介绍
-    }
     interface Column<RecordType = any> extends Partial<TableColumnCtx<RecordType>> {
         prop?: keyof RecordType // 对应列内容的字段名
         type?: Type // 对应列的类型。 如果设置了selection则显示多选框； 如果设置了 index 则显示该行的索引（从 1 开始计算）； 如果设置了 expand 则显示为一个可展开的按钮
@@ -49,10 +43,6 @@ declare namespace Table {
         headerRender?: ({ column, index }) => VNode // 渲染函数，渲染列表头
         headerSlot?: string // 自定义表头插槽名字
         children?: Column<RecordType>[] // 配置多级表头的数据集合
-        editable?: boolean // 是否可编辑
-        editRule?: EditRule // 编辑单元格时是否开启验证
-        editValueFormat?: ({ value }) => string | VNode // 格式化可编辑单元格的内容，可以返回字符串，也可以返回VNode。 当返回VNode时类似于使用render函数渲染
-        editOptions?: IEditOptions // 编辑单元格的参数
     }
     interface Options<T = any> extends Omit<TableProps<T>, 'data'> {
         context?: Table<T>
@@ -60,7 +50,6 @@ declare namespace Table {
         showToolbar?: boolean // 是否显示工具栏
         showPagination?: boolean // 是否展示分页器
         paginationConfig?: Pagination // 分页器配置项，详情见下方 paginationConfig 属性,(当showPagination为true，该配置项必传)
-        beforeEditSubmit?: (params: BeforeEditSubmitParams<T>) => Promise<boolean> // 编辑单元格保存前的钩子
     }
 
     interface Pagination {
