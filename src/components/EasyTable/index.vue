@@ -128,8 +128,8 @@ const currentPageChange = (currentPage: number) => {
     emit('pagination-change', currentPage, _paginationConfig.value.pageSize)
 }
 // 按钮组事件
-const handleAction = (command: Table.Command, row: any) => {
-    emit('command', command, row)
+const handleAction = (command: Table.Command, row: any, index: number) => {
+    emit('command', command, row, index)
 }
 
 // 暴露给父组件参数和方法，如果外部需要更多的参数或者方法，都可以从这里暴露出去。
