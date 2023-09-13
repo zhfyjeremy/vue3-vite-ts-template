@@ -22,7 +22,7 @@ declare namespace Table {
     }
 
     interface ISearchFieldOptions {
-        data?: Recode<string, any>[]
+        data?: Record<string, any>[]
         labelkey?: string // data 数据中对应的key的字段名
         valueKey?: string // data 数据中对应的value的字段名
         value?: any // 下拉框默认回显的值
