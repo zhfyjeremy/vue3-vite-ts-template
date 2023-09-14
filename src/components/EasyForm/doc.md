@@ -163,7 +163,7 @@ declare namespace Form {
         labelkey?: string,
         valueKey?: string,
         placeholder?: string,
-        data: Recode<string, any>[]
+        data: Record<string, any>[]
     }
     interface Options {
         labelWidth?: string | number,
